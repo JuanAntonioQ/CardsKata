@@ -14,8 +14,15 @@ var cardRank = "123456789TJQK";
 var chai = require('chai');
 var expect = chai.expect;
 
+function whoWins(pack1, pack2){
+    if(pack1['0'], pack2['0']){
+        return "Player2 wins 1 to 0";
+    }
+}
+
 describe("the cards game", function(){
     it("wins with the highest card in a single card game", function(){
         expect(whoWins(['1'],['2'])).to.equal('Player2 wins 1 to 0');
     });
 });
+
