@@ -18,25 +18,31 @@ var expect = chai.expect;
 function whoWins(pack1, pack2){
     var scorePlayer1 = 0, scorePlayer2 = 0;
 
-    if(cardRank.indexOf(pack1[0]) < cardRank.indexOf(pack2[0])){
-        ++scorePlayer2;
-    } else if(cardRank.indexOf(pack1[0]) > cardRank.indexOf(pack2[0])){
-        ++scorePlayer1;
-    }
-    if(pack1.length > 1) {
-        if(cardRank.indexOf(pack1[1]) < cardRank.indexOf(pack2[1])){
-            ++scorePlayer2;
-        } else if(cardRank.indexOf(pack1[1]) > cardRank.indexOf(pack2[1])) {
-            ++scorePlayer1;
+    calculateScores();
+    return humanReadableWinnerInfo();
+
+    function calculateScores() {
+        var i = 0;
+        for(i = 0;i < pack1.length;i++){
+            if(cardRank.indexOf(pack1[i]) < cardRank.indexOf(pack2[i])){
+                ++scorePlayer2;
+            } else if(cardRank.indexOf(pack1[i]) > cardRank.indexOf(pack2[i])){
+                ++scorePlayer1;
+            }
         }
-    }
-    if(scorePlayer2 > scorePlayer1){
-        return "Player2 wins 1 to 0";
-    } else if(scorePlayer1 > scorePlayer2){
-        return "Player1 wins 1 to 0";
-    } else {
-        return "Tie";
-    }
+    };
+
+    function humanReadableWinnerInfo() {
+        if(scorePlayer2 > scorePlayer1){
+            return "Player2 wins 1 to 0";
+        } else if(scorePlayer1 > scorePlayer2){
+            return "Player1 wins 1 to 0";
+        } else {
+            return "Tie";
+        }
+    };
+
+    
 }
 
 describe("the cards game", function(){
@@ -60,3 +66,4 @@ describe("the cards game", function(){
         expect(whoWins(['1','2'], ['1', '1'])).to.equal("Player1 wins 1 to 0");
     });
 });
+
