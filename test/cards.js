@@ -16,26 +16,32 @@ var expect = chai.expect;
 
 
 function whoWins(pack1, pack2){
-    var scorePlayer1 = 0, scorePlayer2 = 0;
+    
 
-    calculateScores();
-    return humanReadableWinnerInfo();
+    return humanReadableWinnerInfo.call(this, 
+           calculateScores(pack1.slice(0), pack2.slice(0)));
 
-    function calculateScores() {
-        var i = 0;
-        for(i = 0;i < pack1.length;i++){
-            if(cardRank.indexOf(pack1[i]) < cardRank.indexOf(pack2[i])){
-                ++scorePlayer2;
-            } else if(cardRank.indexOf(pack1[i]) > cardRank.indexOf(pack2[i])){
-                ++scorePlayer1;
+    function calculateScores(pack1, pack2) {
+        var score = 0;
+        while(pack1.length > 0){
+            var card1 = pack1.shift();
+            var card2 = pack2.shift();
+
+            if(cardRank.indexOf(card1) < cardRank.indexOf(card2)){
+                return calculateScores(pack1, pack2) + 1;
+            } else if(cardRank.indexOf(card1) > cardRank.indexOf(card2)){
+                return calculateScores(pack1, pack2) - 1;
+            } else {
+                return calculateScores(pack1, pack2);
             }
         }
+        return 0;
     };
 
-    function humanReadableWinnerInfo() {
-        if(scorePlayer2 > scorePlayer1){
+    function humanReadableWinnerInfo(score) {
+        if(score > 0){
             return "Player2 wins 1 to 0";
-        } else if(scorePlayer1 > scorePlayer2){
+        } else if(score < 0){
             return "Player1 wins 1 to 0";
         } else {
             return "Tie";
