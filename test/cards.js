@@ -16,9 +16,23 @@ var expect = chai.expect;
 
 
 function whoWins(pack1, pack2){
-    if(cardRank.indexOf(pack1['0']) < cardRank.indexOf(pack2['0'])){
+    var scorePlayer1 = 0, scorePlayer2 = 0;
+
+    if(cardRank.indexOf(pack1[0]) < cardRank.indexOf(pack2[0])){
+        ++scorePlayer2;
+    } else if(cardRank.indexOf(pack1[0]) > cardRank.indexOf(pack2[0])){
+        ++scorePlayer1;
+    }
+    if(pack1.length > 1) {
+        if(cardRank.indexOf(pack1[1]) < cardRank.indexOf(pack2[1])){
+            ++scorePlayer2;
+        } else if(cardRank.indexOf(pack1[1]) > cardRank.indexOf(pack2[1])) {
+            ++scorePlayer1;
+        }
+    }
+    if(scorePlayer2 > scorePlayer1){
         return "Player2 wins 1 to 0";
-    } else if(cardRank.indexOf(pack1['0']) > cardRank.indexOf(pack2['0'])){
+    } else if(scorePlayer1 > scorePlayer2){
         return "Player1 wins 1 to 0";
     } else {
         return "Tie";
@@ -43,6 +57,6 @@ describe("the cards game", function(){
     });
 
     it("wins with several cards", function() {
-        expect(whoWins(['1','2'], ['1', '1'])).to.equal("");
+        expect(whoWins(['1','2'], ['1', '1'])).to.equal("Player1 wins 1 to 0");
     });
 });
